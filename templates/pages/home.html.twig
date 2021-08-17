@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title 'NastImmo' %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+
+            <h1>Agence Nastimmo</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci deserunt dignissimos eos optio reprehenderit
+                sunt unde velit, vitae? Dolores eveniet expedita ipsum magnam maiores neque quis quo quod sint veritatis.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus eveniet iure odit perferendis quaerat? At
+                consequatur delectus doloribus eius, iste magni non quia ratione recusandae sed? Neque odit quidem voluptate!
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci blanditiis cum delectus, dolorum incidunt, molestias natus nulla numquam odio quo recusandae saepe ut vel. Adipisci commodi distinctio nisi perferendis vero!</p>
+
+    </div>
+
+    <div class="container">
+        <h2>Les derniers biens</h2>
+        <div class="row flex">
+            {% for property in properties %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="">{{ property.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ property.city }} {{ property.postalCode }}</p>
+                            <div class="text-primary" style="font-weight: bold; font-size: 2rem;">{{ property.getFormattedPrice() }}€</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}
