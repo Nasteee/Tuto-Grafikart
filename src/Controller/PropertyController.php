@@ -5,12 +5,16 @@ namespace App\Controller;
 
 
 use App\Entity\Property;
+use App\Entity\PropertySearch;
+use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PropertyController extends AbstractController
 {
@@ -25,35 +29,21 @@ class PropertyController extends AbstractController
      * @Route("/biens", name="property.index")
      * @return Response
      */
-    public function index() : Response
+    public function index(PaginatorInterface $paginator, Request $request) : Response
     {
-        // Ajouter un bien dans la BDD :
-//        $property = new Property();
-//        $property->setTitle('Mon premier bien')
-//            ->setPrice(250000)
-//            ->setRooms(4)
-//            ->setBedrooms(3)
-//            ->setDescription('Une petite description')
-//            ->setSurface(60)
-//            ->setFloor(4)
-//            ->setHeat(1)
-//            ->setCity('Mayenne')
-//            ->setAdress('15 place de l\'église')
-//            ->setPostalCode('53000');
-//
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($property);
-//        $em->flush();
+        $search = new PropertySearch();
+        $form = $this->createForm(PropertySearchType::class, $search);
+        $form->handleRequest($request);
 
-//        $repository = $this->getDoctrine()->getRepository(Property::class);
-//        dump($repository);
-
-//        $property = $this->repository->findAllVisible();
-//        $property[0]->setSold(true);
-//        $this->em->flush();
+        $properties = $paginator->paginate(
+            $this->repository->findAllVisibleQuery(),
+            $request->query->getInt('page',1),
+            12
+        );
 
         return $this->render('property/index.html.twig', [
-            'current_menu' => 'properties'
+            'properties' => $properties,
+            'form' => $form->createView()
         ]);
     }
 
