@@ -6,6 +6,7 @@
     <div class="bg-light">
         <div class="container">
             {{ form_start(form) }}
+
             <div class="row mt-5">
                 <div class="col">
                     {{ form_row(form.minSurface) }}
@@ -14,7 +15,12 @@
                     {{ form_row(form.maxPrice) }}
                 </div>
                 <div class="col">
-                    <button class="btn btn-primary">Rechercher</button>
+                    {{ form_row(form.options) }}
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Rechercher</button>
+                    </div>
                 </div>
             </div>
             {{ form_end(form) }}
