@@ -26,7 +26,6 @@ class PropertyController extends AbstractController
     }
 
     /**
-     * @Route("/biens", name="property.index")
      * @return Response
      */
     public function index(PaginatorInterface $paginator, Request $request) : Response
@@ -49,7 +48,6 @@ class PropertyController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
      */
     public function show(Property $property, string $slug): Response
     {

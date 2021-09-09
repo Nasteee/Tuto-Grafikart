@@ -9,15 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function PHPUnit\Framework\throwException;
 
-/**
- * @Route("/admin/option")
- */
+
 class AdminOptionController extends AbstractController
 {
-    /**
-     * @Route("/", name="option.index", methods={"GET"})
-     */
+
     public function index(OptionRepository $optionRepository): Response
     {
         return $this->render('admin/option/index.html.twig', [
@@ -25,9 +22,7 @@ class AdminOptionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="option.new", methods={"GET","POST"})
-     */
+
     public function new(Request $request): Response
     {
         $option = new Option();
@@ -39,7 +34,7 @@ class AdminOptionController extends AbstractController
             $entityManager->persist($option);
             $entityManager->flush();
 
-            return $this->redirectToRoute('option.index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/option/new.html.twig', [
@@ -49,9 +44,6 @@ class AdminOptionController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{id}/edit", name="option.edit", methods={"GET","POST"})
-     */
     public function edit(Request $request, Option $option): Response
     {
         $form = $this->createForm(OptionType::class, $option);
@@ -60,7 +52,7 @@ class AdminOptionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('option.index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/option/edit.html.twig', [
@@ -69,9 +61,7 @@ class AdminOptionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="option.delete", methods="DELETE")
-     */
+
     public function delete(Request $request, Option $option): Response
     {
         if ($this->isCsrfTokenValid('delete'.$option->getId(), $request->request->get('_token'))) {
@@ -80,6 +70,6 @@ class AdminOptionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('option.index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);
     }
 }

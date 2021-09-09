@@ -1,7 +1,67 @@
 
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
 
+#Login
 logout:
-  path: /logout
+    path: /logout
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+# Home
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+# Property
+property.index:
+    path: /biens
+    controller: App\Controller\PropertyController::index
+
+property.show:
+    path: /biens/{slug}-{id}
+    controller: App\Controller\PropertyController::show
+    requirements:
+        slug: '[a-z0-9\-]*'
+
+#Admin Option
+admin.option.index:
+    path: /admin/options
+    controller: App\Controller\Admin\AdminOptionController::index
+    methods: GET
+
+option.delete:
+    path: /admin/options/{id}
+    controller: App\Controller\Admin\AdminOptionController::delete
+    methods: DELETE
+    requirements:
+        id: '[0-9]*'
+
+option.new:
+    path: /admin/options/new
+    controller: App\Controller\Admin\AdminOptionController::new
+    methods: GET|POST
+
+option.edit:
+    path: /admin/options/{id}/edit
+    controller: App\Controller\Admin\AdminOptionController::edit
+    methods: GET|POST
+
+#Admin Property
+admin.property.index:
+    path: /admin
+    controller: App\Controller\Admin\AdminPropertyController::index
+
+admin.property.new:
+    path: /admin/properties/create
+    controller: App\Controller\Admin\AdminPropertyController::new
+
+admin.property.edit:
+    path: /admin/properties/{id}
+    controller: App\Controller\Admin\AdminPropertyController::edit
+    methods: GET|POST
+
+admin.property.delete:
+    path: /admin/properties/{id}
+    controller: App\Controller\Admin\AdminPropertyController::delete
+    methods: DELETE
