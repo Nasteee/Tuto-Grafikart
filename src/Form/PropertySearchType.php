@@ -31,15 +31,14 @@ class PropertySearchType extends AbstractType
                     'placeholder' => 'Surface minimal'
                     ]
                 ])
-            ->add('options', EntityType::class, [
-                'required'     => false,
-                'label'        => false,
-                'class'        => Option::class,
-                'choice_label' => 'name',
-                'multiple'     => true
-    ])
+//            ->add('options', EntityType::class, [
+//                'required'     => false,
+//                'label'        => false,
+//                'class'        => Option::class,
+//                'choice_label' => 'name',
+//                'multiple'     => true
+//    ])
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

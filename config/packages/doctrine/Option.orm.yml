@@ -8,6 +8,7 @@ App\Entity\Option:
       id: true
       generator:
         strategy: AUTO
+
   fields:
     name:
       type: string
@@ -17,3 +18,12 @@ App\Entity\Option:
     properties:
       targetEntity: App\Entity\Property
       mappedBy: options
+#      joinTable:
+#        name: property_option
+#        joinColumns:
+#          property_id:
+#            referencedColumnName: id
+#        inverseJoinColumns:
+#          option_id:
+#            referencedColumnName: id
+
