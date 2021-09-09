@@ -1,0 +1,19 @@
+App\Entity\Option:
+  type: entity
+  table: option
+  repositoryClass: App\Repository\OptionRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      nullable: false
+      length: 255
+  manyToMany:
+    properties:
+      targetEntity: App\Entity\Property
+      mappedBy: options

@@ -7,26 +7,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=OptionRepository::class)
- * @ORM\Table(name="`option`")
- */
+///**
+// * @ORM\Entity(repositoryClass=OptionRepository::class)
+// * @ORM\Table(name="`option`")
+// */
 class Option
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Property::class, mappedBy="options")
+     * @var ArrayCollection
      */
     private $properties;
 

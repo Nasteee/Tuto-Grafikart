@@ -11,95 +11,86 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
-/**
- * @ORM\Entity(repositoryClass=PropertyRepository::class)
- * @UniqueEntity("title")
- */
+
 class Property
 {
-
     const HEAT = [
         0 => 'Electrique',
         1 => 'Gaz',
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @Assert\Length(min=5, max=255)
-     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @var string
      */
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
      * @Assert\Range(min=10, max=400)
      */
     private $surface;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $rooms;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $bedrooms;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $floor;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $price;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $heat;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $adress;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Regex ("/[0-9]{5}$/")
+     * @var int
      */
     private $postal_code;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": false})
+     * @var bool
      */
     private $sold = false;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Option::class, inversedBy="properties")
+     * @var ArrayCollection
      */
     private $options;
 
@@ -122,7 +113,6 @@ class Property
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
     public function getSlug(): string
@@ -139,7 +129,6 @@ class Property
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -151,7 +140,6 @@ class Property
     public function setSurface(int $surface): self
     {
         $this->surface = $surface;
-
         return $this;
     }
 
@@ -163,7 +151,6 @@ class Property
     public function setRooms(int $rooms): self
     {
         $this->rooms = $rooms;
-
         return $this;
     }
 
@@ -175,7 +162,6 @@ class Property
     public function setBedrooms(int $bedrooms): self
     {
         $this->bedrooms = $bedrooms;
-
         return $this;
     }
 
@@ -187,7 +173,6 @@ class Property
     public function setFloor(int $floor): self
     {
         $this->floor = $floor;
-
         return $this;
     }
 
@@ -199,7 +184,6 @@ class Property
     public function setPrice(int $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -216,7 +200,6 @@ class Property
     public function setHeat(int $heat): self
     {
         $this->heat = $heat;
-
         return $this;
     }
 
@@ -233,7 +216,6 @@ class Property
     public function setCity(string $city): self
     {
         $this->city = $city;
-
         return $this;
     }
 
@@ -245,7 +227,6 @@ class Property
     public function setAdress(string $adress): self
     {
         $this->adress = $adress;
-
         return $this;
     }
 
@@ -257,7 +238,6 @@ class Property
     public function setPostalCode(string $postal_code): self
     {
         $this->postal_code = $postal_code;
-
         return $this;
     }
 
@@ -269,7 +249,6 @@ class Property
     public function setSold(bool $sold): self
     {
         $this->sold = $sold;
-
         return $this;
     }
 
@@ -281,7 +260,6 @@ class Property
     public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
-
         return $this;
     }
 
@@ -299,7 +277,6 @@ class Property
             $this->options[] = $option;
             $option->addProperty($this);
         }
-
         return $this;
     }
 
@@ -308,7 +285,6 @@ class Property
         if ($this->options->removeElement($option)) {
             $option->removeProperty($this);
         }
-
         return $this;
     }
 }

@@ -1,0 +1,25 @@
+App\Entity\User:
+  type: entity
+  table: user
+  repositoryClass: App\Repository\UserRepository
+
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+
+  fields:
+    username:
+      type: string
+      nullable: false
+      length: 180
+      unique: true
+
+    password:
+      type: string
+
+    roles:
+      type: json
+

@@ -13,28 +13,25 @@ use Symfony\Component\Serializer\SerializerInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
-
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @var string
      */
     private $username;
 
     /**
-     * @ORM\Column(type="json")
+     * @var array
      */
+
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @var string
      */
     private $password;
 

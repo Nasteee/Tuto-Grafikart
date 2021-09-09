@@ -1,0 +1,61 @@
+App\Entity\Property:
+  type: entity
+  table: property
+  repositoryClass: App\Repository\PropertyRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    title:
+      type: string
+      nullable: false
+      length: 255
+      unique: true
+
+    description:
+      type: text
+      nullable: true
+
+    surface:
+      type: integer
+
+    rooms:
+      type: integer
+
+    bedrooms:
+      type: integer
+
+    floor:
+      type: integer
+
+    price:
+      type: integer
+
+    heat:
+      type: integer
+
+    city:
+      type: string
+
+    adress:
+      type: string
+
+    postal_code:
+      type: string
+      Regex: '/[0-9]{5}$/'
+
+    sold:
+      type: boolean
+      options:
+        default: false
+
+    created_at:
+      type: datetime
+
+  manyToMany:
+    options:
+      targetEntity: App\Entity\Option
+      inversedBy: properties
