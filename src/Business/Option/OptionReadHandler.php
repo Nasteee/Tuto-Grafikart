@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Business\Option;
 
+use App\Entity\Option;
 use App\Repository\OptionRepository;
 
 class OptionReadHandler
@@ -16,9 +17,10 @@ class OptionReadHandler
         $this->repository = $repository;
     }
 
-    public function handle()
+    public function handle(OptionReadAction $action): Option
     {
-
+        $option = $this->repository->read($action->id);
+        return $option;
     }
 
 }

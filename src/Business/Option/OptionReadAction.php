@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Business\Option;
 
 class OptionReadAction
 {
@@ -8,4 +8,9 @@ class OptionReadAction
      * @var string
      */
     public $name;
+
+    /**
+     * @var int
+     */
+    public $id;
 }
