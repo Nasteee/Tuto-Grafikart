@@ -2,26 +2,30 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Property;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Business\Property\PropertyDeletionAction;
+use App\Business\Property\PropertyDeletionHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 class PropertyDeletionController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
-    private $entityManager;
+    /**
+     * @var PropertyDeletionHandler
+     */
+    private $handler;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(PropertyDeletionHandler $handler)
     {
-        $this->entityManager      = $entityManager;
+        $this->handler = $handler;
     }
-    public function delete(Property $property, Request $request)
+    public function delete(Request $request, int $id)
     {
-        if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->get('_token')))
-        {
-            $this->entityManager->remove($property);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Supprimé avec succes');
+        $action = new PropertyDeletionAction();
+        $action->id = $id;
 
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')))
+        {
+            $this->handler->handle($action);
+            $this->addFlash('success', 'Supprimé avec succes');
         }
         return $this->redirectToRoute('admin.property.index');
     }

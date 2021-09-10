@@ -2,29 +2,44 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Option;
-use App\Form\OptionType;
+use App\Business\Option\OptionCreationAction;
+use App\Business\Option\OptionCreationHandler;
+use App\Form\OptionCreationType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class OptionCreationController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+class OptionCreationController extends AbstractController
 {
+    /**
+     * @var OptionCreationHandler
+     */
+    private $handler;
+
+    public function __construct(OptionCreationHandler $handler)
+    {
+        $this->handler = $handler;
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function new(Request $request): Response
     {
-        $option = new Option();
-        $form = $this->createForm(OptionType::class, $option);
+        $action = new OptionCreationAction();
+
+        $form = $this->createForm(OptionCreationType::class, $action);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($option);
-            $entityManager->flush();
+
+            $this->handler->handle($action);
 
             return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/option/new.html.twig', [
-            'option' => $option,
             'form' => $form,
         ]);
     }

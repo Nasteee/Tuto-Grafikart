@@ -2,35 +2,33 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Property;
-use App\Form\PropertyType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Business\Property\PropertyCreationAction;
+use App\Business\Property\PropertyCreationHandler;
+use App\Form\PropertyCreationType;
 use Symfony\Component\HttpFoundation\Request;
 
 class PropertyCreationController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
-    private $entityManager;
+    private $handler;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(PropertyCreationHandler $handler)
     {
-        $this->entityManager      = $entityManager;
+        $this->handler = $handler;
     }
-
     public function new(Request $request)
     {
-        $property = new Property();
-        $form = $this->createForm(PropertyType::class, $property);
+        $action = new PropertyCreationAction();
+
+        $form = $this->createForm(PropertyCreationType::class, $action);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $this->entityManager->persist($property);
-            $this->entityManager->flush();
+            $this->handler->handle($action);
             $this->addFlash('success', 'Ajouter avec succes');
             return $this->redirectToRoute('admin.property.index');
         }
         return $this->render('admin/property/new.html.twig', [
-            'property' => $property,
             'form'     => $form->createView()
         ]);
 

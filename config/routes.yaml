@@ -65,3 +65,5 @@ admin.property.delete:
     path: /admin/properties/{id}
     controller: App\Controller\Admin\PropertyDeletionController::delete
     methods: DELETE
+    requirements:
+        id: '[0-9]*'

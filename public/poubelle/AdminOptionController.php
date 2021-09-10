@@ -3,7 +3,7 @@
 //namespace App\Controller\Admin;
 //
 //use App\Entity\Option;
-//use App\Form\OptionType;
+//use App\Form\OptionCreationType;
 //use App\Repository\OptionRepository;
 //use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 //use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@
 //    public function new(Request $request): Response
 //    {
 //        $option = new Option();
-//        $form = $this->createForm(OptionType::class, $option);
+//        $form = $this->createForm(OptionCreationType::class, $option);
 //        $form->handleRequest($request);
 //
 //        if ($form->isSubmitted() && $form->isValid()) {
@@ -44,7 +44,7 @@
 //
 //    public function edit(Request $request, Option $option): Response
 //    {
-//        $form = $this->createForm(OptionType::class, $option);
+//        $form = $this->createForm(OptionCreationType::class, $option);
 //        $form->handleRequest($request);
 //
 //        if ($form->isSubmitted() && $form->isValid()) {

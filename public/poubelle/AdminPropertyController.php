@@ -3,7 +3,7 @@
 //namespace App\Controller\Admin;
 //
 //use App\Entity\Property;
-//use App\Form\PropertyType;
+//use App\Form\PropertyCreationType;
 //use App\Repository\PropertyRepository;
 //use Doctrine\ORM\EntityManager;
 //use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +39,7 @@
 //    public function new(Request $request)
 //    {
 //        $property = new Property();
-//        $form = $this->createForm(PropertyType::class, $property);
+//        $form = $this->createForm(PropertyCreationType::class, $property);
 //        $form->handleRequest($request);
 //
 //        if ($form->isSubmitted() && $form->isValid())
@@ -62,7 +62,7 @@
 //
 //    public function edit(Property $property, Request $request)
 //    {
-//        $form = $this->createForm(PropertyType::class, $property);
+//        $form = $this->createForm(PropertyCreationType::class, $property);
 //        $form->handleRequest($request);
 //
 //        if ($form->isSubmitted() && $form->isValid())

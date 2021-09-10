@@ -69,6 +69,59 @@ class PropertyRepository extends ServiceEntityRepository
             ->where('p.sold = false');
     }
 
+    /**
+     * @param Property $property
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * Création d'une property
+     */
+    public function create(Property $property)
+    {
+        $this->getEntityManager()->persist($property);
+        $this->getEntityManager()->flush($property);
+    }
+
+    /**
+     * @param Property $property
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * Edition d'une property
+     */
+    public function edit(Property $property)
+    {
+        $this->getEntityManager()->flush($property);
+    }
+
+    /**
+     * @param Property $property
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * Suppresion d'une property
+     */
+    public function delete(Property $property)
+    {
+        $this->getEntityManager()->remove($property);
+        $this->getEntityManager()->flush($property);
+    }
+
+    /**
+     * @param int $id
+     * @return Property
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * Lecture d'une property en fonction de son ID
+     */
+    public function read(int $id): Property
+    {
+        if ($id >= 0) {
+            $property = $this->createQueryBuilder('e')
+                ->where('e.id = :id')
+                ->setParameter('id', $id);
+        }
+        $query = $property->getQuery();
+        return $query->getSingleResult();
+    }
+
     // /**
     //  * @return Property[] Returns an array of Property objects
     //  */

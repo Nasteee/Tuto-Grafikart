@@ -26,6 +26,7 @@ class Property
 
     /**
      * @Assert\Length(min=5, max=255)
+     * @var string
      */
     private $title;
 
@@ -36,6 +37,7 @@ class Property
 
     /**
      * @Assert\Range(min=10, max=400)
+     * @var int
      */
     private $surface;
 
@@ -94,8 +96,39 @@ class Property
      */
     private $options;
 
-    public function __construct()
+    /**
+     * @param ArrayCollection $options
+     */
+
+
+    public function __construct(
+        string $title,
+        string $description,
+        int $surface,
+        int $rooms,
+        int $bedrooms,
+        int $floor,
+        int $price,
+        int $heat,
+        string $city,
+        string $adress,
+        int $postal_code,
+        bool $sold,
+        ArrayCollection $options = null
+    )
     {
+        $this->title = $title;
+        $this->description = $description;
+        $this->surface = $surface;
+        $this->rooms = $rooms;
+        $this->bedrooms = $bedrooms;
+        $this->floor = $floor;
+        $this->price = $price;
+        $this->heat = $heat;
+        $this->city = $city;
+        $this->adress = $adress;
+        $this->postal_code = $postal_code;
+        $this->sold = $sold;
         $this->created_at = new \DateTime();
         $this->options = new ArrayCollection();
     }
@@ -286,5 +319,10 @@ class Property
             $option->removeProperty($this);
         }
         return $this;
+    }
+
+    public function setOptions(ArrayCollection $options): void
+    {
+        $this->options = $options;
     }
 }

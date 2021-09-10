@@ -25,9 +25,10 @@ class Option
      */
     private $properties;
 
-    public function __construct()
+    public function __construct(string $name)
     {
         $this->properties = new ArrayCollection();
+        $this->name = $name;
     }
 
     public function getId(): ?int

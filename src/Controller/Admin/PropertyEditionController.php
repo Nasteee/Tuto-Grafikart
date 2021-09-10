@@ -2,8 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Property;
-use App\Form\PropertyType;
+use App\Business\Property\PropertyEditionAction;
+use App\Business\Property\PropertyEditionHandler;
+use App\Form\PropertyEditionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,27 +13,30 @@ class PropertyEditionController extends \Symfony\Bundle\FrameworkBundle\Controll
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private $handler;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(PropertyEditionHandler $handler)
     {
-        $this->entityManager      = $entityManager;
+        $this->handler      = $handler;
     }
 
-    public function edit(Property $property, Request $request)
+    public function edit(Request $request, int $id)
     {
-        $form = $this->createForm(PropertyType::class, $property);
+        $action = new PropertyEditionAction();
+        $action->id = $id;
+
+        $form = $this->createForm(PropertyEditionType::class, $action);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $this->entityManager->flush();
+            $this->handler->handle($action);
+
             $this->addFlash('success', 'Modifier avec succes');
             return $this->redirectToRoute('admin.property.index');
         }
 
         return $this->render('admin/property/edit.html.twig', [
-            'property' => $property,
             'form'     => $form->createView()
         ]);
     }

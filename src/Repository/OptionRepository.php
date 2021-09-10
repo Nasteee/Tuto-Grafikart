@@ -19,6 +19,39 @@ class OptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Option::class);
     }
 
+    /**
+     * Persiste une option en base de données.
+     */
+    public function create(Option $option)
+    {
+        $this->getEntityManager()->persist($option);
+        $this->getEntityManager()->flush($option);
+    }
+
+    public function edit(Option $option)
+    {
+        $this->getEntityManager()->flush($option);
+    }
+
+    public function delete(Option $option)
+    {
+        $this->getEntityManager()->remove($option);
+        $this->getEntityManager()->flush($option);
+    }
+
+    public function read(int $id): Option
+    {
+        if ($id >= 0 ){
+            $option = $this->createQueryBuilder('e')
+                        ->where('e.id = :id')
+                        ->setParameter('id', $id);
+        }
+        $query = $option->getQuery();
+        return $query->getSingleResult();
+
+    }
+
+
     // /**
     //  * @return Option[] Returns an array of Option objects
     //  */
