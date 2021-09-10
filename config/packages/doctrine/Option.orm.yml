@@ -1,6 +1,6 @@
 App\Entity\Option:
   type: entity
-  table: option
+  table: "`option`"
   repositoryClass: App\Repository\OptionRepository
   id:
     id:

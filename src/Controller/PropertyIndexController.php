@@ -22,7 +22,6 @@ class PropertyIndexController extends AbstractController
     {
         $this->repository = $repository;
         $this->em = $em;
-
     }
 
     /**
