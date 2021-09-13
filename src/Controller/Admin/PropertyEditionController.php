@@ -7,8 +7,8 @@ use App\Business\Property\PropertyEditionHandler;
 use App\Business\Property\PropertyReadAction;
 use App\Business\Property\PropertyReadHandler;
 use App\Form\PropertyEditionType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PropertyEditionController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
@@ -22,36 +22,28 @@ class PropertyEditionController extends \Symfony\Bundle\FrameworkBundle\Controll
      */
     private $handlerRead;
 
-    public function __construct(PropertyEditionHandler $handler, PropertyReadHandler $handlerRead)
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(PropertyEditionHandler $handler,
+                                PropertyReadHandler $handlerRead,
+                                ValidatorInterface $validator)
     {
         $this->handler      = $handler;
-        $this->handlerRead = $handlerRead;
+        $this->handlerRead  = $handlerRead;
+        $this->validator    = $validator;
     }
 
     public function edit(Request $request, int $id)
     {
         $actionRead = new PropertyReadAction();
         $actionRead->id = $id;
-
-
-        $action = new PropertyEditionAction();
-        $action->id = $id;
-
         $property = $this->handlerRead->handle($actionRead);
 
-        $action->title = $property->getTitle();
-        $action->sold = $property->getSold();
-        $action->options = $property->getOptions();
-        $action->postal_code = $property->getPostalCode();
-        $action->adress = $property->getAdress();
-        $action->city = $property->getCity();
-        $action->heat = $property->getHeat();
-        $action->price = $property->getPrice();
-        $action->floor = $property->getFloor();
-        $action->rooms = $property->getRooms();
-        $action->bedrooms = $property->getBedrooms();
-        $action->surface = $property->getSurface();
-        $action->description = $property->getDescription();
+        $action = PropertyEditionAction::hydrate($property);
+        $this->validator->validate($action);
 
         $form = $this->createForm(PropertyEditionType::class, $action);
         $form->handleRequest($request);

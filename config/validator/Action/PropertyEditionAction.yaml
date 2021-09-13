@@ -1,0 +1,19 @@
+App\Business\Property\PropertyEditionAction:
+  properties:
+    title:
+      - Length:
+          min: 5
+          max: 255
+          minMessage: 'Le titre doit au moins comporter 5 caractères'
+          maxMessage: 'Le titre ne peut comporter que 255 caractères maximum'
+      - NotBlank: ~
+
+    surface:
+      - Range:
+          min: 10
+          max: 500
+          minMessage: 'La surface doit fait au minimum 10 mètres carré'
+          maxMessage: 'La surface doit fait au maximum 500 mètres carré'
+
+    postal_code:
+      - Regex: '/^(?:[0-8]\d|9[0-8])\d{3}$/'

@@ -33,7 +33,11 @@ class PropertyEditionHandler
             ->setAdress($action->adress)
             ->setPostalCode($action->postal_code)
             ->setSold($action->sold)
-            ->setOptions($action->options);
+            ->setOptions($action->options)
+            ->setImageFile($action->imageFile)
+            ->setFilename($action->filename)
+            ->setUpdatedAt($action->updated_at);
+
 
         $this->repository->edit($property);
     }

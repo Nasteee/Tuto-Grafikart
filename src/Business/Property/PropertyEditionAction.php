@@ -2,7 +2,8 @@
 
 namespace App\Business\Property;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Property;
+use Symfony\Component\HttpFoundation\File\File;
 
 class PropertyEditionAction
 {
@@ -76,7 +77,46 @@ class PropertyEditionAction
     public $created_at;
 
     /**
-     * @var ArrayCollection
+     * @var array
      */
     public $options;
+
+    /**
+     * @var File
+     */
+    public $imageFile;
+
+    /**
+     * @var string
+     */
+    public $filename;
+    /**
+     * @var \DateTime
+     */
+    public $updated_at;
+
+    public static function hydrate(Property $property): PropertyEditionAction
+    {
+        $action = new self();
+
+        $action->id = $property->getId();
+        $action->title = $property->getTitle();
+        $action->sold = $property->getSold();
+        $action->postal_code = $property->getPostalCode();
+        $action->adress = $property->getAdress();
+        $action->city = $property->getCity();
+        $action->heat = $property->getHeat();
+        $action->price = $property->getPrice();
+        $action->floor = $property->getFloor();
+        $action->rooms = $property->getRooms();
+        $action->bedrooms = $property->getBedrooms();
+        $action->surface = $property->getSurface();
+        $action->description = $property->getDescription();
+        $action->options = $property->getOptions()->toArray();
+        $action->imageFile = $property->getImageFile();
+        $action->filename = $property->getFilename();
+        $action->updated_at = $property->getUpdatedAt();
+
+        return $action;
+    }
 }

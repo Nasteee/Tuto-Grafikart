@@ -9,6 +9,7 @@ use App\Business\Option\OptionReadHandler;
 use App\Form\OptionEditionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class OptionEditionController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
@@ -22,13 +23,20 @@ class OptionEditionController extends \Symfony\Bundle\FrameworkBundle\Controller
      */
     private $handlerRead;
 
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
     public function __construct(
         OptionEditionHandler $handler,
-        OptionReadHandler $handlerRead
+        OptionReadHandler $handlerRead,
+        ValidatorInterface $validator
     )
     {
-        $this->handler = $handler;
-        $this->handlerRead = $handlerRead;
+        $this->handler      = $handler;
+        $this->handlerRead  = $handlerRead;
+        $this->validator    = $validator;
     }
 
     public function edit(Request $request, int $id): Response
@@ -41,6 +49,7 @@ class OptionEditionController extends \Symfony\Bundle\FrameworkBundle\Controller
 
         $action->name = $this->handlerRead->handle($actionRead)->getName();
 
+        $this->validator->validate($action);
         $form = $this->createForm(OptionEditionType::class, $action);
         $form->handleRequest($request);
 

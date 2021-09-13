@@ -2,7 +2,7 @@
 
 namespace App\Business\Property;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
 
 class PropertyCreationAction
 {
@@ -72,7 +72,21 @@ class PropertyCreationAction
     public $created_at;
 
     /**
-     * @var ArrayCollection
+     * @var array
      */
     public $options;
+
+    /**
+     * @var File
+     */
+    public $imageFile;
+
+    /**
+     * @var string
+     */
+    public $filename;
+    /**
+     * @var \DateTime
+     */
+    public $updated_at;
 }

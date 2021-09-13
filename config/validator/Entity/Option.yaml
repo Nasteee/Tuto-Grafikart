@@ -1,0 +1,10 @@
+App\Entity\Option:
+  properties:
+    name:
+      - Length:
+          min: 5
+          max: 255
+          minMessage: 'Le titre doit au moins comporter 5 caractères'
+          maxMessage: 'Le titre ne peut comporter que 255 caractères maximum'
+      - NotBlank: ~
+      - Unique: ~

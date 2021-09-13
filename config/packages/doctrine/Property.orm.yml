@@ -8,12 +8,23 @@ App\Entity\Property:
       id: true
       generator:
         strategy: AUTO
+
   fields:
     title:
       type: string
       nullable: false
       length: 255
       unique: true
+
+    filename:
+      type: string
+      nullable: true
+      length: 255
+
+    updated_at:
+      type: datetime
+      nullable: true
+
 
     description:
       type: text
@@ -45,7 +56,7 @@ App\Entity\Property:
 
     postal_code:
       type: string
-      Regex: '/[0-9]{5}$/'
+#      Regex: '/[0-9]{5}$/'
 
     sold:
       type: boolean

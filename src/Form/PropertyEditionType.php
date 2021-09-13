@@ -5,17 +5,30 @@ namespace App\Form;
 use App\Business\Property\PropertyEditionAction;
 use App\Entity\Option;
 use App\Entity\Property;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\OptionRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PropertyEditionType extends AbstractType
 {
+    /**
+     * @var OptionRepository
+     */
+    private $optionRepository;
+
+    public function __construct(OptionRepository $optionRepository)
+    {
+        $this->optionRepository =  $optionRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $options = $this->optionRepository->findAll();
+
         $builder
             ->add('title')
             ->add('description')
@@ -27,15 +40,21 @@ class PropertyEditionType extends AbstractType
             ->add('heat', ChoiceType::class, [
                 'choices' => $this->getChoices()
             ])
-            ->add('options', EntityType::class, [
-                'class' => Option::class,
+            ->add('options', ChoiceType::class, [
+                'multiple' => true,
+                'choices' => $options,
+                'choice_value' => 'id',
                 'choice_label' => 'name',
-                'multiple' => true
+            ])
+            ->add('imageFile', FileType::class, [
+                'required' => false
             ])
             ->add('city')
             ->add('adress')
             ->add('postal_code')
-            ->add('sold', CheckboxType::class)
+            ->add('sold', CheckboxType::class, [
+                'required' => false
+            ])
         ;
     }
 

@@ -4,6 +4,7 @@ namespace App\Business\Property;
 
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PropertyCreationHandler
 {
@@ -12,9 +13,15 @@ class PropertyCreationHandler
      */
     private $repository;
 
-    public function __construct(PropertyRepository $repository)
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(PropertyRepository $repository, ValidatorInterface $validator)
     {
         $this->repository = $repository;
+        $this->validator = $validator;
     }
 
     public function handle(PropertyCreationAction $action)
@@ -32,12 +39,17 @@ class PropertyCreationHandler
             $action->adress,
             $action->postal_code,
             $action->sold,
-            $action->options
+            $action->options,
+            $action->imageFile,
+            $action->filename
         );
 
+        $errors = $this->validator->validate($property);
+
+        if (count($errors) > 0) {
+            return false;
+        }
+
         $this->repository->create($property);
-
-
-
     }
 }
