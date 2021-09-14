@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Business\Exceptions\BusinessException;
 use App\Business\Property\PropertyCreationAction;
 use App\Business\Property\PropertyCreationHandler;
 use App\Form\PropertyCreationType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -36,7 +38,20 @@ class PropertyCreationController extends \Symfony\Bundle\FrameworkBundle\Control
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $this->handler->handle($action);
+            try {
+                $this->handler->handle($action);
+            } catch (BusinessException $exception) {
+                $errors = $exception->errors;
+                foreach ($errors as $error) {
+                    $property = $error->getPropertyPath();
+                    $form->get($property)->addError(new FormError($error->getMessage()));
+                }
+
+                return $this->render('admin/property/new.html.twig', [
+                    'form' => $form->createView()
+                ]);
+            }
+
             $this->addFlash('success', 'Ajouter avec succes');
             return $this->redirectToRoute('admin.property.index');
         }
@@ -44,6 +59,5 @@ class PropertyCreationController extends \Symfony\Bundle\FrameworkBundle\Control
         return $this->render('admin/property/new.html.twig', [
             'form' => $form->createView()
         ]);
-
     }
 }

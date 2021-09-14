@@ -2,6 +2,7 @@
 
 namespace App\Business\Property;
 
+use App\Business\Exceptions\BusinessException;
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -45,9 +46,8 @@ class PropertyCreationHandler
         );
 
         $errors = $this->validator->validate($property);
-
         if (count($errors) > 0) {
-            return false;
+            throw new BusinessException($errors);
         }
 
         $this->repository->create($property);

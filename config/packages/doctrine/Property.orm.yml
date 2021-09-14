@@ -56,7 +56,6 @@ App\Entity\Property:
 
     postal_code:
       type: string
-#      Regex: '/[0-9]{5}$/'
 
     sold:
       type: boolean

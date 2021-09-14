@@ -2,16 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- */
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     /**

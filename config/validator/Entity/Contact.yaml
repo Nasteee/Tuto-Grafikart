@@ -1,0 +1,32 @@
+App\Entity\Contact:
+  constraints:
+#    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+  properties:
+    firstname:
+      - Length:
+          min: 2
+          max: 100
+          minMessage: 'Minimum 2 caractères'
+          maxMessage: 'Maximum 100 caractères'
+      - NotBlank: ~
+
+    lastname:
+      - Length:
+          min: 2
+          max: 100
+          minMessage: 'Minimum 2 caractères'
+          maxMessage: 'Maximum 100 caractères'
+      - NotBlank: ~
+
+    phone:
+      - Length:
+          min: 10
+          max: 10
+          minMessage: 'Numero de telephone à 10 chiffres'
+          maxMessage: 'Numero de telephone à 10 chiffres'
+      - NotBlank: ~
+
+    email:
+      - NotBlank: ~
+
+

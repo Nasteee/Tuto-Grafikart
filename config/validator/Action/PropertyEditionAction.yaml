@@ -17,3 +17,8 @@ App\Business\Property\PropertyEditionAction:
 
     postal_code:
       - Regex: '/^(?:[0-8]\d|9[0-8])\d{3}$/'
+
+    imageFile:
+      - Image:
+          mimeTypes: 'image/jpeg'
+          mimeTypesMessage: 'Le format doit être en jpeg'

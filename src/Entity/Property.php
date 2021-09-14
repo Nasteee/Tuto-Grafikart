@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -104,9 +105,8 @@ class Property
         int $postal_code,
         bool $sold,
         array $options = [],
-        File  $imageFile,
+        File  $imageFile = null,
         string $filename = null
-
     )
     {
         $this->title = $title;
@@ -122,10 +122,13 @@ class Property
         $this->postal_code = $postal_code;
         $this->sold = $sold;
         $this->created_at = new \DateTime();
-        $this->options = [];
         $this->imageFile = $imageFile;
         $this->filename = $filename;
         $this->updated_at = new \DateTime();
+        $this->options = new ArrayCollection();
+        foreach ($options as $option) {
+            $this->options->add($option);
+        }
     }
 
     /**
@@ -336,7 +339,11 @@ class Property
 
     public function setOptions(array $options)
     {
-        $this->options = $options;
+        $this->options = new ArrayCollection();
+        foreach ($options as $option) {
+            $this->options->add($option);
+        }
+
         return $this;
     }
 

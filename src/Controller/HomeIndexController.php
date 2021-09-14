@@ -10,6 +10,17 @@ class HomeIndexController extends AbstractController
 
     public function index(PropertyRepository $repository): Response
     {
+
+
+
+
+        // 3 services
+        // meme chose mais trois manières de faire différente
+
+
+
+
+
         // Securité
         // Recuperation de données
 

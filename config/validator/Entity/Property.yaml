@@ -1,4 +1,6 @@
 App\Entity\Property:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
   properties:
     title:
       - Length:
@@ -7,7 +9,6 @@ App\Entity\Property:
           minMessage: 'Le titre doit au moins comporter 5 caractères'
           maxMessage: 'Le titre ne peut comporter que 255 caractères maximum'
       - NotBlank: ~
-      - Unique: ~
 
     surface:
       - Range:
@@ -18,3 +19,8 @@ App\Entity\Property:
 
     postal_code:
       - Regex: '/^(?:[0-8]\d|9[0-8])\d{3}$/'
+
+    imageFile:
+      - Image:
+          mimeTypes: 'image/jpeg'
+          mimeTypesMessage: 'Le format doit être en jpeg'

@@ -1,4 +1,6 @@
 App\Entity\Option:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
   properties:
     name:
       - Length:
@@ -7,4 +9,3 @@ App\Entity\Option:
           minMessage: 'Le titre doit au moins comporter 5 caractères'
           maxMessage: 'Le titre ne peut comporter que 255 caractères maximum'
       - NotBlank: ~
-      - Unique: ~

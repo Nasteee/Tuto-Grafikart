@@ -4,6 +4,9 @@
 
 {% block body %}
     <div class="container mt-4">
+        <div id="haut"></div>
+        <a href="#bas"><button type="button" class="btn btn-outline-dark">Bas de page</button></a>
+
         <h1>Gestion des biens</h1>
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">
@@ -38,12 +41,9 @@
         <div class="text-right">
             <a href="{{ path('admin.property.new') }}" class="btn btn-warning">Créer un nouveau bien</a>
         </div>
-
-
-
-
-
+        <a href="#haut"><button type="button" class="btn btn-outline-dark">Haut de page</button></a>
     </div>
+    <div id="bas"></div>
 
 
 
