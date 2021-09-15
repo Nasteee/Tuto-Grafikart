@@ -18,9 +18,6 @@ class HomeIndexController extends AbstractController
         // meme chose mais trois manières de faire différente
 
 
-
-
-
         // Securité
         // Recuperation de données
 
